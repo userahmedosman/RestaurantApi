@@ -11,9 +11,9 @@ public class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     ];
 
-    [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IEnumerable<WeatherForecast>> GetWeatherForecastAsync()
     {
+        await Task.Delay(100); // Simulate async work
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -21,5 +21,11 @@ public class WeatherForecastController : ControllerBase
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<WeatherForecast>> Get()
+    {
+        return await GetWeatherForecastAsync();
     }
 }
