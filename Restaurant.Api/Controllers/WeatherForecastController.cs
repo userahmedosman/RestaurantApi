@@ -10,7 +10,6 @@ public class WeatherForecastController : ControllerBase
     [
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     ];
-
     public async Task<IEnumerable<WeatherForecast>> GetWeatherForecastAsync()
     {
         await Task.Delay(100); // Simulate async work
