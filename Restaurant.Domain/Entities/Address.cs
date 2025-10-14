@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Restaurant.Domain.Entities
+namespace Restaurants.Domain.Entities
 {
     public class Address
     {
