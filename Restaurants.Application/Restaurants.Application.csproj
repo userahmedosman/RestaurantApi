@@ -6,8 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>    <ProjectReference Include="..\Restaurant.Api\Restaurants.Api.csproj" />
-    <ProjectReference Include="..\Restaurant.Domain\Restaurants.Domain.csproj" />
+  <ItemGroup>   
 
   </ItemGroup>
 
