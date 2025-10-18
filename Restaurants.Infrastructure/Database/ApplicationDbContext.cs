@@ -5,8 +5,8 @@ namespace Restaurants.Infrastructure.Database
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
 
-        internal DbSet<Restaurant> Restaurants { get; set; }
-        internal DbSet<Dish> Dishes { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Dish> Dishes { get; set; }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
