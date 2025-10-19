@@ -13,6 +13,13 @@ namespace Restaurants.Application.Mapper
         public AutoMapperProfile() {
             CreateMap<Restaurant, RestaurantDto>().ReverseMap();
             CreateMap<Dish, DishDto>().ReverseMap();
+
+            CreateMap<CreateRestaurantDto, Restaurant>().ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address
+            {
+                City = src.City,
+                Street = src.Street,
+                PostalCode = src.PostalCode
+            }));
         }
     }
 }

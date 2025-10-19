@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants;
+using Restaurants.Application.Restaurants.Dto;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 
@@ -31,6 +32,24 @@ namespace Restaurants.Api.Controllers
             return Ok(restaurant);
 
 
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateRestaurant([FromBody] CreateRestaurantDto create)
+        {
+            if(create == null)
+            {
+                return BadRequest();
+            }
+
+            int id = await restaurantsService.CreateRestaurantAsync(create);
+
+            if(id <= 0)
+            {
+                return BadRequest("Could not create restaurant");
+            }
+
+            return CreatedAtAction(nameof(GetRestaurantById), new { id }, null);
         }
     }
 }
