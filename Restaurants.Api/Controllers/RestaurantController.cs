@@ -11,7 +11,6 @@ namespace Restaurants.Api.Controllers
     public class RestaurantController(IRestaurantsService restaurantsService) : ControllerBase
     {
 
-
         [HttpGet]
         public async Task<ActionResult<List<Restaurant>>> GetAllRestaurants()
         {
@@ -37,7 +36,7 @@ namespace Restaurants.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRestaurant([FromBody] CreateRestaurantDto create)
         {
-            if(create == null)
+            if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
