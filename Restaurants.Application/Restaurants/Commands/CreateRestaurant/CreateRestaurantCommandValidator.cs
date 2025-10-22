@@ -2,10 +2,10 @@
 using FluentValidation;
 using Restaurants.Application.Restaurants.Dto;
 
-namespace Restaurants.Application.Restaurants.Validators;
-public class CreateRestaurantDtoValidator:AbstractValidator<CreateRestaurantDto>
+namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
+public class CreateRestaurantCommandValidator:AbstractValidator<CreateRestaurantCommand>
 {
-    public CreateRestaurantDtoValidator()
+    public CreateRestaurantCommandValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Restaurant name is required.")

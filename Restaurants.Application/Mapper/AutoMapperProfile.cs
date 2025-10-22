@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Restaurants.Application.Dishes.Dto;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Dto;
 using Restaurants.Domain.Entities;
 using System;
@@ -14,7 +15,7 @@ namespace Restaurants.Application.Mapper
             CreateMap<Restaurant, RestaurantDto>().ReverseMap();
             CreateMap<Dish, DishDto>().ReverseMap();
 
-            CreateMap<CreateRestaurantDto, Restaurant>().ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address
+            CreateMap<CreateRestaurantCommand, Restaurant>().ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address
             {
                 City = src.City,
                 Street = src.Street,
