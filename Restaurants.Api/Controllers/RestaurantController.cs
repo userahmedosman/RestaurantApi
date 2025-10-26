@@ -16,7 +16,6 @@ namespace Restaurants.Api.Controllers
     [ApiController]
     public class RestaurantController(IMediator mediator) : ControllerBase
     {
-
         [HttpGet]
         public async Task<ActionResult<List<Restaurant>>> GetAllRestaurants()
         {
@@ -92,6 +91,5 @@ namespace Restaurants.Api.Controllers
             return NotFound();
         }
 
-
-        }
+     }
 }
