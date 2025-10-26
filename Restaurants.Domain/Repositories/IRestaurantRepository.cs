@@ -1,7 +1,4 @@
 ﻿using Restaurants.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Restaurants.Domain.Repositories
 {
@@ -12,5 +9,9 @@ namespace Restaurants.Domain.Repositories
         Task<Restaurant> GetByIdAsync(int id);
 
         Task<int> CreateAsync(Restaurant restaurant);
+
+        Task<bool> DeleteAsync(int id);
+
+        Task<bool> UpdateAsync(int id, Restaurant restaurant);
     }
 }
