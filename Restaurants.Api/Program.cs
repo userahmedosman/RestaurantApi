@@ -9,12 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddSwaggerGen();
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
     .WriteTo.File("logs/Restaurant-Api-.log.txt", rollingInterval: Serilog.RollingInterval.Day, rollOnFileSizeLimit: true)
     .ReadFrom.Configuration(ctx.Configuration));
 var app = builder.Build();
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseSerilogRequestLogging();
 var scope = app.Services.CreateScope();
 var restaturantSeed = scope.ServiceProvider.GetRequiredService<IRestaturantSeed>();
