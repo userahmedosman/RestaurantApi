@@ -43,15 +43,9 @@ namespace Restaurants.Api.Controllers
             {
                 return BadRequest();
             }
-          var isDeleted =  await mediator.Send(new DeleteRestaurantCommand(id));
 
-            if (isDeleted)
-            {
-                return NoContent();
-            }
-
-            return NotFound();
-
+            await mediator.Send(new DeleteRestaurantCommand(id));
+            return NoContent();
         }
 
         [HttpPost]
@@ -81,14 +75,11 @@ namespace Restaurants.Api.Controllers
             }
 
             update.Id = Id;
-            var isUpdated = await mediator.Send(update);
+            await mediator.Send(update);
 
-            if (isUpdated)
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+          
+            return NoContent();
+           
         }
 
      }

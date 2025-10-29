@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
+using Restaurants.Domain.Exceptions;
 using Restaurants.Infrastructure.Database;
 
 namespace Restaurants.Infrastructure.Repositories
@@ -27,6 +28,8 @@ namespace Restaurants.Infrastructure.Repositories
             var restaurant = await context.Restaurants
                  .Include(r => r.Dishes)
                  .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (restaurant == null) throw new NotFoundException($"Restaurant with ID={id} not found");
             return restaurant!;
         }
 
@@ -34,13 +37,14 @@ namespace Restaurants.Infrastructure.Repositories
         {
             bool result = false;
             var restaurant = await context.Restaurants.FindAsync(id);
-            if (restaurant != null)
+            if (restaurant == null)
             {
-                context.Restaurants.Remove(restaurant);
-                await context.SaveChangesAsync();
-                result = true;
+               throw new NotFoundException($"Restaurant with ID={id} not found");
 
             }
+            context.Restaurants.Remove(restaurant);
+            await context.SaveChangesAsync();
+            result = true;
 
             return result;
         }
@@ -57,7 +61,7 @@ namespace Restaurants.Infrastructure.Repositories
                 await context.SaveChangesAsync();
                 return true;
             }
-            return false;
+            throw new NotFoundException($"Restaurant with ID={id} not found");
         }
     }
 }

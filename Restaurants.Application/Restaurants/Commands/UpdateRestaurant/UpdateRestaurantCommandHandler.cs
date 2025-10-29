@@ -7,14 +7,13 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 
 public class UpdateRestaurantCommandHandler(ILogger<UpdateRestaurantCommandHandler> logger, 
     IRestaurantRepository restaurantRepository,
-    IMapper mapper) : IRequestHandler<UpdateRestaurantCommand, bool>
+    IMapper mapper) : IRequestHandler<UpdateRestaurantCommand>
 {
-    public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Handling UpdateRestaurantCommand for Restaurant Id: {RestaurantId}", request.Id);
         var restaurantToUpdate = mapper.Map<Domain.Entities.Restaurant>(request);
-        var result = await restaurantRepository.UpdateAsync(request.Id, restaurantToUpdate);
+        await restaurantRepository.UpdateAsync(request.Id, restaurantToUpdate);
 
-        return result;
     }
 }

@@ -9,14 +9,13 @@ using System.Text;
 namespace Restaurants.Application.Restaurants.Commands.DeleteRestaurant
 {
     public class DeleteRestaurantCommandHandler(IRestaurantRepository restaurantRepository,
-        ILogger<CreateRestaurantCommandHandler> logger) : IRequestHandler<DeleteRestaurantCommand, bool>
+        ILogger<CreateRestaurantCommandHandler> logger) : IRequestHandler<DeleteRestaurantCommand>
     {
-        public async Task<bool> Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Handling DeleteRestaurantCommand for Restaurant Id: {RestaurantId}", request.Id);
-            bool isDelted = await restaurantRepository.DeleteAsync(request.Id);
+            await restaurantRepository.DeleteAsync(request.Id);
 
-            return isDelted;
         }
     }
 }

@@ -1,3 +1,4 @@
+using Restaurants.Api.Middleware;
 using Restaurants.Application.Extensions;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seed;
@@ -10,13 +11,18 @@ builder.Services.AddControllers();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ExceptionHandler>();
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
     .WriteTo.File("logs/Restaurant-Api-.log.txt", rollingInterval: Serilog.RollingInterval.Day, rollOnFileSizeLimit: true)
     .ReadFrom.Configuration(ctx.Configuration));
 var app = builder.Build();
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseMiddleware<ExceptionHandler>();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseSerilogRequestLogging();
 var scope = app.Services.CreateScope();
 var restaturantSeed = scope.ServiceProvider.GetRequiredService<IRestaturantSeed>();
