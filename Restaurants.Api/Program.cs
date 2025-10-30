@@ -12,12 +12,14 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ExceptionHandler>();
+builder.Services.AddScoped<RequestTimeMeasureMiddleware>();
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
     .WriteTo.File("logs/Restaurant-Api-.log.txt", rollingInterval: Serilog.RollingInterval.Day, rollOnFileSizeLimit: true)
     .ReadFrom.Configuration(ctx.Configuration));
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandler>();
+app.UseMiddleware<RequestTimeMeasureMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
