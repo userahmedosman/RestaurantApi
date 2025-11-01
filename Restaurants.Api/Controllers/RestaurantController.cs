@@ -12,7 +12,7 @@ using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Api.Controllers
 {
-    [Route("restaurants")]
+    [Route("api/restaurants")]
     [ApiController]
     public class RestaurantController(IMediator mediator) : ControllerBase
     {

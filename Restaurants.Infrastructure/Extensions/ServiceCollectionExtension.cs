@@ -17,6 +17,7 @@ namespace Restaurants.Infrastructure.Extensions
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IRestaturantSeed, RestaturantSeed>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            services.AddScoped<IDishRepository, DishRepository>();
         }
     }
 }

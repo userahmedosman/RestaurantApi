@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using Restaurants.Application.Mapper;
+using Restaurants.Application.Mapper.DishMapper;
+using Restaurants.Application.Mapper.RestaurantMapper;
 using Restaurants.Application.Restaurants;
 
 namespace Restaurants.Application.Extensions;
@@ -13,7 +14,8 @@ public static class ServiceCollectionExtension
     {
         var applicationAssembly = typeof(ServiceCollectionExtension).Assembly;
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
-        services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfile>());
+        services.AddAutoMapper(cfg => cfg.AddProfile<RestaurantMapperProfile>());
+        services.AddAutoMapper(cfg => cfg.AddProfile<DishMapperProfile>());
         services.AddValidatorsFromAssembly(applicationAssembly)
             .AddFluentValidationAutoValidation();
     }
