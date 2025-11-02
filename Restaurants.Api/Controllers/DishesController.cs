@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Application.Dishes.Commands.DeleteDish;
 using Restaurants.Application.Dishes.Queries;
+using Restaurants.Application.Dishes.Queries.GetAllDishes;
+using Restaurants.Application.Dishes.Queries.GetDishById;
 
 namespace Restaurants.Api.Controllers;
 
@@ -21,6 +23,13 @@ public class DishesController(IMediator mediator) : ControllerBase
         command.RestaurantId = restaurantId;
         await mediator.Send(command);
         return Created();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetDishes([FromRoute] int restaurantId)
+    {
+        var dishes = await mediator.Send(new GetAllDishesQuery(restaurantId));
+        return Ok(dishes);
     }
 
     [HttpGet("{dishId}")]

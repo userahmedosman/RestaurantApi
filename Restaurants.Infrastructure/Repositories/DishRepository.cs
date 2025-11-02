@@ -20,6 +20,13 @@ public class DishRepository(ApplicationDbContext context) : IDishRepository
         await context.SaveChangesAsync();
     }
 
+    public async Task<List<Dish>> GetAllByRestaurantIdAsync(int restaurantId)
+    {
+        var dishes = await Task.FromResult(context.Dishes.Where(d => d.RestaurantId == restaurantId).ToList());
+
+        return dishes;
+    }
+
     public async Task<Dish?> GetByIdAsync(int dishId)
     {
         var dish = await context.Dishes.FindAsync(dishId);

@@ -5,7 +5,7 @@ using Restaurants.Domain.Exceptions;
 using Restaurants.Application.Dishes.Dto;
 using Restaurants.Domain.Repositories;
 
-namespace Restaurants.Application.Dishes.Queries;
+namespace Restaurants.Application.Dishes.Queries.GetDishById;
 
 public class GetDishByIdQueryHandler
     (IMapper mapper,
