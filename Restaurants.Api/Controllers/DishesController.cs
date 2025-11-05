@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Application.Dishes.Commands.DeleteDish;
+using Restaurants.Application.Dishes.Dto;
 using Restaurants.Application.Dishes.Queries;
 using Restaurants.Application.Dishes.Queries.GetAllDishes;
 using Restaurants.Application.Dishes.Queries.GetDishById;
@@ -14,15 +15,22 @@ namespace Restaurants.Api.Controllers;
 public class DishesController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateDish([FromRoute] int restaurantId, [FromBody] CreateDishCommand command)
+    public async Task<ActionResult> CreateDish([FromRoute] int restaurantId, [FromBody] CreateDishDto dto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest();
         }
-        command.RestaurantId = restaurantId;
-        await mediator.Send(command);
-        return Created();
+
+        var command = new CreateDishCommand{
+            RestaurantId = restaurantId,
+            Name = dto.Name,
+            Description = dto.Description,
+            Price = dto.Price
+        };
+
+        int dishId =  await mediator.Send(command);
+        return CreatedAtAction(nameof(GetDish), new { command.RestaurantId, dishId }, null);
     }
 
     [HttpGet]
